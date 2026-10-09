@@ -255,15 +255,22 @@ a { color: inherit; text-decoration: none; }
   .foot { padding-inline: var(--s5); }
 }
 
-/* ── Revelado progresivo ────────────────────────────────────── */
+/* ── Revelado escalonado ──────────────────────────────────────
+   Progresivo: sin JS todo se ve. Solo cuando `html.js-reveal` está
+   presente se ocultan y entran con stagger. Una sola curva.        */
 
-.sec, .id { opacity: 0; transform: translateY(10px); }
-.sec.in, .id.in {
-  opacity: 1; transform: none;
-  transition: opacity .5s var(--ease), transform .5s var(--ease);
+.js-reveal .rise {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.js-reveal .rise.in {
+  opacity: 1;
+  transform: none;
+  transition: opacity .55s var(--ease), transform .55s var(--ease);
+  transition-delay: calc(var(--d, 0) * 70ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sec, .id { opacity: 1; transform: none; }
+  .js-reveal .rise, .js-reveal .rise.in { opacity: 1; transform: none; }
   * { transition: none !important; animation: none !important; }
 }

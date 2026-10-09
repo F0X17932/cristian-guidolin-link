@@ -139,19 +139,34 @@
 </footer>
 
 <script>
-// Una sola mejora progresiva: revelar bloques al entrar en viewport. Sin ella, la página se ve igual.
+// Revelado escalonado. Progresivo: si no hay JS o el usuario pide menos
+// movimiento, la página se ve entera y quieta. Sin dependencias.
 (() => {
-  const targets = document.querySelectorAll('.sec, .id');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce || !('IntersectionObserver' in window)) {
-    targets.forEach(t => t.classList.add('in'));
-    return;
-  }
+  if (reduce || !('IntersectionObserver' in window)) return;
+
+  // Quién entra y en qué orden: el bloque de identidad, y dentro de cada
+  // sección las piezas una a una. Nunca más de 5 pasos por grupo.
+  const grupos = [
+    [...document.querySelectorAll('.id > *')],
+    ...[...document.querySelectorAll('.sec')].map(sec => [...sec.children])
+  ];
+
+  const targets = [];
+  grupos.forEach(grupo => grupo.forEach((el, i) => {
+    el.classList.add('rise');
+    el.style.setProperty('--d', Math.min(i, 5));
+    targets.push(el);
+  }));
+
+  document.documentElement.classList.add('js-reveal');
+
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
     });
-  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+
   targets.forEach(t => io.observe(t));
 })();
 </script>

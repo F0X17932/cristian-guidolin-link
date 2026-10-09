@@ -96,7 +96,7 @@ a { color: inherit; text-decoration: none; }
   font-size: clamp(1.875rem, 7vw, 2.625rem);
   line-height: .95; letter-spacing: -0.03em;
 }
-.name em { font-style: normal; color: var(--acc); }
+.name em { font-style: normal; color: inherit; }
 
 .top-line { margin: 0; font-size: 1rem; color: var(--suave); text-wrap: pretty; max-width: 32ch; }
 
@@ -228,6 +228,7 @@ a { color: inherit; text-decoration: none; }
   .face { width: 96px; height: 120px; }
   .pet { width: 48px; right: -20px; bottom: -12px; }
   .kicker { grid-column: 2; grid-row: 1; align-self: end; margin: 0; }
+  .kicker span { display: block; }
   .name { grid-column: 2; grid-row: 2; align-self: start; margin: 0; font-size: 2rem; }
   .top-line { grid-column: 1 / -1; max-width: none; margin-top: var(--s4); }
   .top-acts { display: grid; grid-template-columns: 1fr; gap: var(--s3); }
@@ -349,3 +350,9 @@ body { animation: gridDrift 90s linear infinite; }
   .rec--thumb .rec-s { grid-column: 2; grid-row: auto; justify-self: start; margin-top: var(--s1); }
   .rec--thumb .rec-img { grid-row: 1 / span 3; }
 }
+
+/* Logo raster (Hermes) dentro de la pastilla */
+.logo-img { width: 18px; height: 18px; border-radius: 50%; object-fit: cover; flex: 0 0 auto; display: block; }
+/* Icono WhatsApp en los botones de contacto */
+.wa { width: 18px; height: 18px; flex: 0 0 auto; }
+.btn--solid { display: inline-flex; align-items: center; gap: var(--s2); }

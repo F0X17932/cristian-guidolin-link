@@ -32,10 +32,10 @@
     const d = document.createElement('div');
     d.className = 'cookies'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-label', 'Aviso de cookies');
     d.innerHTML =
-      '<p>Uso cookies de Google Analytics para saber qué contenido sirve. Solo si aceptas. ' +
-      '<a href="https://cristianguidolin.com/privacidad">Más info</a></p>' +
-      '<div class="cookies-b"><button type="button" data-c="no">Rechazar</button>' +
-      '<button type="button" data-c="si" class="si">Aceptar</button></div>';
+      '<p><span class="ck-ico" aria-hidden="true">🍪</span> ¿Me dejas medir las visitas? ' +
+      '<a href="https://cristianguidolin.com/privacidad">Info</a></p>' +
+      '<div class="cookies-b"><button type="button" data-c="no">No</button>' +
+      '<button type="button" data-c="si" class="si">Vale</button></div>';
     d.addEventListener('click', e => {
       const b = e.target.closest('button[data-c]'); if (!b) return;
       guardar(b.dataset.c); if (b.dataset.c === 'si') cargarGA();

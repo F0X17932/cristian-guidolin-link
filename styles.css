@@ -388,3 +388,13 @@ body { animation: gridDrift 90s linear infinite; }
   .cookies-b button { flex: 1; }
 }
 @media (prefers-reduced-motion: reduce) { .cookies { transition: none; } }
+
+/* Aviso de cookies compacto: una sola línea también en móvil */
+.cookies { width: auto; max-width: calc(100% - 24px); gap: 12px; padding: 8px 8px 8px 14px; border-radius: 999px; white-space: nowrap; }
+.cookies p { display: flex; align-items: center; gap: 6px; }
+.cookies .ck-ico { font-size: 1.125rem; line-height: 1; }
+.cookies button { min-height: 36px; padding: 0 14px; border-radius: 999px; }
+@media (max-width: 560px) {
+  .cookies { flex-direction: row; align-items: center; gap: 8px; bottom: 12px; font-size: .8125rem; }
+  .cookies-b button { flex: 0 0 auto; }
+}

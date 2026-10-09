@@ -1,17 +1,16 @@
 /* ─────────────────────────────────────────────────────────────
-   Cristian R. Guidolin · piel HUESO + salsa
-   Una columna. Blanco frío con lavado lila, un acento violeta apagado
-   y el robot pixel como firma. Nada del crema verdoso de otras webs.
+   Cristian R. Guidolin · v4 minimal
+   Una sola columna centrada. Bloques con etiqueta y separador fino.
+   Sin columna lateral, sin numeritos, sin cajas de colores.
    ───────────────────────────────────────────────────────────── */
 
 :root {
-  --fondo:   #F7F5FB;
-  --fondo-2: #EFEBF7;
-  --tinta:   #14131A;
-  --suave:   #5A5867;
-  --linea:   #E3DEEE;
-  --acc:     #6D3BFF;
-  --acc-2:   #6D3BFF;
+  --papel:   #F4F4F1;  --papel:   oklch(0.965 0.004 100);
+  --papel-2: #E8E8E3;  --papel-2: oklch(0.935 0.005 100);
+  --tinta:   #101014;  --tinta:   oklch(0.19 0.012 275);
+  --suave:   #4C4D55;  --suave:   oklch(0.42 0.012 275);
+  --linea:   #D5D5D2;  --linea:   oklch(0.87 0.008 275);
+  --acc:     #7850FF;  --acc:     oklch(0.52 0.24 285);
   --verde:   #047857;
 
   --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
@@ -24,9 +23,8 @@
   --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px;
   --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
 
-  /* Rejilla de 1px, muy tenue: da textura técnica sin ruido */
-  --grid: linear-gradient(rgba(20,19,26,.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(20,19,26,.04) 1px, transparent 1px);
+  --grid: linear-gradient(rgba(16,16,20,.045) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(16,16,20,.045) 1px, transparent 1px);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -34,9 +32,9 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  background-color: var(--fondo);
+  background-color: var(--papel);
   background-image: var(--grid);
-  background-size: 32px 32px;
+  background-size: 28px 28px;
   color: var(--tinta);
   font-family: var(--sans);
   font-size: clamp(1rem, .96rem + .2vw, 1.0625rem);
@@ -49,11 +47,13 @@ a { color: inherit; text-decoration: none; }
 
 .skip {
   position: absolute; left: -9999px; top: 0;
-  background: var(--acc); color: #fff;
+  background: var(--tinta); color: var(--papel);
   padding: var(--s3) var(--s4); z-index: 10;
   font-family: var(--mono); font-size: .8125rem;
 }
 .skip:focus { left: var(--s4); top: var(--s4); }
+
+/* ── Columna única ───────────────────────────────────────────── */
 
 .sheet {
   max-width: 680px;
@@ -61,27 +61,26 @@ a { color: inherit; text-decoration: none; }
   padding: var(--s8) var(--s5) var(--s7);
 }
 
-/* ── Cabecera ────────────────────────────────────────────────── */
+/* ── Cabecera: quién eres + botón ────────────────────────────── */
 
-.top { display: grid; gap: var(--s5); margin-bottom: var(--s7); }
+.top { display: grid; gap: var(--s5); margin-bottom: var(--s8); }
 
-.top-id {
-  display: grid;
-  grid-template-columns: 96px 1fr auto;
-  gap: var(--s5);
-  align-items: start;
-}
+.top-id { display: grid; grid-template-columns: 92px 1fr; gap: var(--s5); align-items: start; }
 
+/* Retrato: 92×115, esquinas 4px. Sustituir por la foto real. */
 .face {
-  width: 96px; height: 120px;
+  width: 92px; height: 115px;
   border: 1px solid var(--linea); border-radius: var(--r-sm);
-  overflow: hidden; background: var(--fondo-2);
+  background-color: var(--papel-2);
+  background-image: var(--grid); background-size: 14px 14px;
+  display: grid; place-items: center;
+  overflow: hidden;
 }
 .face img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-/* El robot pixel: firma de la casa, pequeño y alineado con el nombre */
-.pet { width: 84px; align-self: end; opacity: .96; }
-.pet img { width: 100%; height: auto; display: block; image-rendering: pixelated; }
+.face .mono-ini {
+  font-family: var(--mono); font-size: 1.75rem; font-weight: 500;
+  color: var(--suave); letter-spacing: .02em;
+}
 
 .kicker {
   margin: 0 0 var(--s2);
@@ -92,12 +91,16 @@ a { color: inherit; text-decoration: none; }
 .name {
   margin: 0 0 var(--s3);
   font-family: var(--display); font-weight: 800;
-  font-size: clamp(1.875rem, 7vw, 2.625rem);
+  font-size: clamp(1.875rem, 7vw, 2.75rem);
   line-height: .95; letter-spacing: -0.03em;
 }
 .name em { font-style: normal; color: var(--acc); }
 
-.top-line { margin: 0; font-size: 1rem; color: var(--suave); text-wrap: pretty; max-width: 32ch; }
+.top-line {
+  margin: 0;
+  font-size: 1rem; color: var(--suave);
+  text-wrap: pretty; max-width: 34ch;
+}
 
 .top-acts { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); }
 
@@ -105,7 +108,7 @@ a { color: inherit; text-decoration: none; }
   display: inline-flex; align-items: center; gap: var(--s2);
   padding: 5px var(--s3) 5px var(--s2);
   border: 1px solid var(--linea); border-radius: var(--r-sm);
-  background: var(--fondo-2);
+  background: var(--papel-2);
   font-family: var(--mono); font-size: .75rem; color: var(--suave);
 }
 .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--verde); }
@@ -113,29 +116,24 @@ a { color: inherit; text-decoration: none; }
 .cta {
   display: inline-flex; align-items: center; gap: var(--s2);
   padding: var(--s3) var(--s5);
-  border: 1.5px solid var(--acc-2); border-radius: var(--r-sm);
-  background: var(--acc-2); color: #fff;
+  border: 1.5px solid var(--tinta); border-radius: var(--r-sm);
+  background: var(--tinta); color: var(--papel);
   font-weight: 600; font-size: .9375rem;
 }
-.cta span[aria-hidden] { color: #fff; }
+.cta span[aria-hidden] { color: var(--acc); }
 
-/* ── Bloques ─────────────────────────────────────────────────── */
+/* ── Bloques: etiqueta + separador fino ──────────────────────── */
 
 .blk { border-top: 1px solid var(--linea); padding-top: var(--s4); margin-bottom: var(--s7); }
 .blk:last-of-type { margin-bottom: 0; }
 
 .blk-h {
-  display: flex; align-items: center; gap: var(--s2);
-  margin-bottom: var(--s2);
+  display: block; margin-bottom: var(--s2);
   font-family: var(--mono); font-size: .6875rem; font-weight: 500;
   letter-spacing: .14em; text-transform: uppercase; color: var(--suave);
-  font-style: normal;
-}
-.px {                     /* cuadradito pixel: el guiño, sin gritar */
-  width: 6px; height: 6px; background: var(--acc); display: inline-block;
-  flex: 0 0 auto;
 }
 
+/* Filas: nombre a la izquierda, estado a la derecha */
 .rows { display: flex; flex-direction: column; }
 
 .row {
@@ -157,7 +155,12 @@ a { color: inherit; text-decoration: none; }
 .row--no { pointer-events: none; }
 .row--no .row-t, .row--no .row-d, .row--no .row-s { color: var(--suave); }
 
-.rec { display: grid; grid-template-columns: 1fr auto; gap: 2px var(--s4); padding: var(--s4) 0; }
+/* Recursos: línea discreta dentro del bloque */
+.rec {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 2px var(--s4);
+  padding: var(--s4) 0;
+}
 .rec-t { font-weight: 600; font-size: 1rem; }
 .rec-d { grid-column: 1; color: var(--suave); font-size: .875rem; text-wrap: pretty; }
 .rec-s {
@@ -167,25 +170,24 @@ a { color: inherit; text-decoration: none; }
   white-space: nowrap;
 }
 
+/* Redes: pastillas discretas */
 .social { display: flex; flex-wrap: wrap; gap: var(--s2); }
-.social a svg { width: 18px; height: 18px; flex: 0 0 auto; color: var(--acc); }
 .social a {
   display: inline-flex; align-items: center; gap: var(--s2);
   padding: var(--s2) var(--s4);
   border: 1px solid var(--linea); border-radius: var(--r-sm);
-  background: var(--fondo-2);
   font-size: .9375rem; font-weight: 500;
-  color: var(--tinta);
 }
 
+/* Contacto */
 .contacto p { margin: 0 0 var(--s4); color: var(--suave); max-width: 46ch; text-wrap: pretty; }
 .acts { display: flex; flex-wrap: wrap; gap: var(--s3); }
 .btn {
   display: inline-block; padding: var(--s3) var(--s5);
-  border: 1px solid var(--linea); border-radius: var(--r-sm);
-  font-weight: 600; font-size: .9375rem; color: var(--tinta);
+  border: 1px solid var(--tinta); border-radius: var(--r-sm);
+  font-weight: 600; font-size: .9375rem;
 }
-.btn--solid { background: var(--acc-2); border-color: var(--acc-2); color: #fff; }
+.btn--solid { background: var(--tinta); color: var(--papel); }
 .tel { margin: var(--s4) 0 0; font-family: var(--mono); font-size: .75rem; color: var(--suave); }
 
 /* ── Pie ─────────────────────────────────────────────────────── */
@@ -199,15 +201,14 @@ a { color: inherit; text-decoration: none; }
 .foot p { margin: 0; font-family: var(--mono); font-size: .75rem; }
 .foot .foot-meta { color: var(--suave); }
 
-/* ── Hover ───────────────────────────────────────────────────── */
+/* ── Hover (solo puntero real) ───────────────────────────────── */
 
 @media (hover: hover) {
-  .row-t, .rec-t { transition: color .18s var(--ease); }
-  a.row:hover .row-t, a.rec:hover .rec-t { color: var(--acc); }
+  .row-t { transition: color .18s var(--ease); }
+  a.row:hover .row-t, .social a:hover, .rec:hover .rec-t { color: var(--acc); }
   .social a, .btn, .cta { transition: border-color .18s var(--ease), color .18s var(--ease), background-color .18s var(--ease); }
-  .social a:hover { border-color: var(--acc); color: var(--acc); }
-  .btn:hover { border-color: var(--acc); color: var(--acc); }
-  .btn--solid:hover, .cta:hover { background: var(--acc); border-color: var(--acc); color: #fff; }
+  .social a:hover { border-color: var(--acc); }
+  .btn--solid:hover, .cta:hover { background: var(--acc); border-color: var(--acc); }
 }
 
 /* ── Entrada escalonada ──────────────────────────────────────── */
@@ -219,65 +220,12 @@ a { color: inherit; text-decoration: none; }
   transition-delay: calc(var(--d, 0) * 70ms);
 }
 
-@media (max-width: 560px) {
-  .top-id { grid-template-columns: 74px 1fr; gap: var(--s4); }
-  .face { width: 74px; height: 94px; }
-  .pet { grid-column: 2; width: 62px; margin-top: var(--s3); justify-self: end; }
+@media (max-width: 520px) {
+  .top-id { grid-template-columns: 76px 1fr; gap: var(--s4); }
+  .face { width: 76px; height: 96px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .js-reveal .rise, .js-reveal .rise.in { opacity: 1; transform: none; }
   * { transition: none !important; animation: none !important; }
 }
-
-/* ── Salsa: movimiento sutil y continuo ───────────────────────
-   Cuatro gestos en bucle, todos lentos y de baja amplitud. La página
-   se siente viva sin que nada salte a la vista. Se apagan todos con
-   prefers-reduced-motion.                                            */
-
-/* 1 · La rejilla del fondo se desplaza una celda cada minuto y medio */
-@keyframes gridDrift { to { background-position: 32px 32px; } }
-body { animation: gridDrift 90s linear infinite; }
-
-/* 2 · Cinta de herramientas: bucle continuo, con los bordes difuminados */
-.cinta {
-  overflow: hidden;
-  margin: 0 0 var(--s7);
-  padding: var(--s3) 0;
-  border-top: 1px solid var(--linea);
-  border-bottom: 1px solid var(--linea);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-}
-.cinta-track {
-  display: flex; align-items: center; gap: var(--s5);
-  width: max-content;
-  animation: cintaMove 55s linear infinite;
-}
-@keyframes cintaMove { to { transform: translateX(-50%); } }
-.cinta-track span {
-  font-family: var(--mono); font-size: .75rem;
-  letter-spacing: .12em; text-transform: uppercase;
-  color: var(--tinta); opacity: .45;
-  white-space: nowrap;
-}
-.cinta-track .px { opacity: .55; }
-
-/* 3 · El robot respira: sube y baja cuatro píxeles cada cuatro segundos */
-@keyframes botBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-.pet img { animation: botBob 4.2s ease-in-out infinite; }
-
-/* 4 · El punto de disponible late, lento y bajo */
-@keyframes dotPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(4,120,87,.35); }
-  60%      { box-shadow: 0 0 0 7px rgba(4,120,87,0); }
-}
-.dot { animation: dotPulse 3.2s ease-in-out infinite; }
-
-/* La etiqueta de cada bloque lleva un filete que crece al aparecer */
-.blk-h { position: relative; }
-.blk-h::after {
-  content: ""; position: absolute; left: 0; bottom: -6px; height: 1px; width: 0;
-  background: var(--acc); opacity: .5;
-}
-.blk.in .blk-h::after { width: 24px; transition: width .7s var(--ease) .25s; }

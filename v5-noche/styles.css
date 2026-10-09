@@ -1,18 +1,18 @@
 /* ─────────────────────────────────────────────────────────────
-   Cristian R. Guidolin · piel HUESO + salsa
-   Una columna. Blanco frío con lavado lila, un acento violeta apagado
-   y el robot pixel como firma. Nada del crema verdoso de otras webs.
+   Cristian R. Guidolin · piel NOCHE
+   Una columna. Fondo tinta, un acento violeta, el robot pixel como
+   firma. Nada que se parezca a una página crema con columna lateral.
    ───────────────────────────────────────────────────────────── */
 
 :root {
-  --fondo:   #F7F5FB;
-  --fondo-2: #EFEBF7;
-  --tinta:   #14131A;
-  --suave:   #5A5867;
-  --linea:   #E3DEEE;
-  --acc:     #6D3BFF;
-  --acc-2:   #6D3BFF;
-  --verde:   #047857;
+  --fondo:   #0F0F14;
+  --fondo-2: #17171F;
+  --tinta:   #F2F2EF;
+  --suave:   #9C9CAB;
+  --linea:   #272733;
+  --acc:     #8A66FF;
+  --acc-2:   #7850FF;
+  --verde:   #34D399;
 
   --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
   --sans: "Instrument Sans", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
@@ -25,8 +25,8 @@
   --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
 
   /* Rejilla de 1px, muy tenue: da textura técnica sin ruido */
-  --grid: linear-gradient(rgba(20,19,26,.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(20,19,26,.04) 1px, transparent 1px);
+  --grid: linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -80,7 +80,7 @@ a { color: inherit; text-decoration: none; }
 .face img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* El robot pixel: firma de la casa, pequeño y alineado con el nombre */
-.pet { width: 84px; align-self: end; opacity: .96; }
+.pet { width: 84px; align-self: start; margin-top: 26px; opacity: .96; }
 .pet img { width: 100%; height: auto; display: block; image-rendering: pixelated; }
 
 .kicker {
@@ -168,7 +168,6 @@ a { color: inherit; text-decoration: none; }
 }
 
 .social { display: flex; flex-wrap: wrap; gap: var(--s2); }
-.social a svg { width: 18px; height: 18px; flex: 0 0 auto; color: var(--acc); }
 .social a {
   display: inline-flex; align-items: center; gap: var(--s2);
   padding: var(--s2) var(--s4);
@@ -229,55 +228,3 @@ a { color: inherit; text-decoration: none; }
   .js-reveal .rise, .js-reveal .rise.in { opacity: 1; transform: none; }
   * { transition: none !important; animation: none !important; }
 }
-
-/* ── Salsa: movimiento sutil y continuo ───────────────────────
-   Cuatro gestos en bucle, todos lentos y de baja amplitud. La página
-   se siente viva sin que nada salte a la vista. Se apagan todos con
-   prefers-reduced-motion.                                            */
-
-/* 1 · La rejilla del fondo se desplaza una celda cada minuto y medio */
-@keyframes gridDrift { to { background-position: 32px 32px; } }
-body { animation: gridDrift 90s linear infinite; }
-
-/* 2 · Cinta de herramientas: bucle continuo, con los bordes difuminados */
-.cinta {
-  overflow: hidden;
-  margin: 0 0 var(--s7);
-  padding: var(--s3) 0;
-  border-top: 1px solid var(--linea);
-  border-bottom: 1px solid var(--linea);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-}
-.cinta-track {
-  display: flex; align-items: center; gap: var(--s5);
-  width: max-content;
-  animation: cintaMove 55s linear infinite;
-}
-@keyframes cintaMove { to { transform: translateX(-50%); } }
-.cinta-track span {
-  font-family: var(--mono); font-size: .75rem;
-  letter-spacing: .12em; text-transform: uppercase;
-  color: var(--tinta); opacity: .45;
-  white-space: nowrap;
-}
-.cinta-track .px { opacity: .55; }
-
-/* 3 · El robot respira: sube y baja cuatro píxeles cada cuatro segundos */
-@keyframes botBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-.pet img { animation: botBob 4.2s ease-in-out infinite; }
-
-/* 4 · El punto de disponible late, lento y bajo */
-@keyframes dotPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(4,120,87,.35); }
-  60%      { box-shadow: 0 0 0 7px rgba(4,120,87,0); }
-}
-.dot { animation: dotPulse 3.2s ease-in-out infinite; }
-
-/* La etiqueta de cada bloque lleva un filete que crece al aparecer */
-.blk-h { position: relative; }
-.blk-h::after {
-  content: ""; position: absolute; left: 0; bottom: -6px; height: 1px; width: 0;
-  background: var(--acc); opacity: .5;
-}
-.blk.in .blk-h::after { width: 24px; transition: width .7s var(--ease) .25s; }

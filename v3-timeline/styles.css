@@ -1,0 +1,269 @@
+/* ─────────────────────────────────────────────────────────────
+   Cristian R. Guidolin · la línea
+   v3 · dirección: línea de tiempo. Una sola columna, un carril que
+   se rellena al bajar, hitos en vez de secciones numeradas.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --papel:   #F4F4F1;  --papel:   oklch(0.965 0.004 100);
+  --papel-2: #E8E8E3;  --papel-2: oklch(0.935 0.005 100);
+  --tinta:   #101014;  --tinta:   oklch(0.19 0.012 275);
+  --suave:   #4C4D55;  --suave:   oklch(0.42 0.012 275);
+  --linea:   #D5D5D2;  --linea:   oklch(0.87 0.008 275);
+  --acc:     #7850FF;  --acc:     oklch(0.52 0.24 285);
+  --acc-bg:  #F0EBFF;  --acc-bg:  oklch(0.95 0.04 285);
+  --verde:   #047857;
+
+  --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --sans: "Instrument Sans", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --r-sm: 4px; --r-md: 6px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
+
+  --grid: linear-gradient(rgba(16,16,20,.045) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(16,16,20,.045) 1px, transparent 1px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background-color: var(--papel);
+  background-image: var(--grid);
+  background-size: 28px 28px;
+  color: var(--tinta);
+  font-family: var(--sans);
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; border-radius: var(--r-sm); }
+
+.skip {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--tinta); color: var(--papel);
+  padding: var(--s3) var(--s4); z-index: 10;
+  font-family: var(--mono); font-size: .8125rem;
+}
+.skip:focus { left: var(--s4); top: var(--s4); }
+
+/* ── Medida de lectura: una sola columna ─────────────────────── */
+
+.sheet {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--s8) var(--s5) var(--s9);
+}
+
+/* ── Cabecera ────────────────────────────────────────────────── */
+
+.top { margin-bottom: var(--s8); }
+
+.kicker {
+  margin: 0 0 var(--s4);
+  font-family: var(--mono); font-size: .75rem;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--suave);
+}
+
+.name {
+  margin: 0 0 var(--s4);
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(2.5rem, 9vw, 4.25rem);
+  line-height: .9; letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.name em { font-style: normal; color: var(--acc); }
+
+.top-line {
+  margin: 0 0 var(--s5);
+  font-family: var(--display); font-weight: 600;
+  font-size: clamp(1.125rem, 1rem + .6vw, 1.5rem);
+  line-height: 1.25; letter-spacing: -0.02em;
+  text-wrap: pretty; max-width: 26ch;
+}
+
+/* La tesis, como declaración y no como traza pequeña */
+.tesis {
+  margin: 0 0 var(--s6);
+  padding: var(--s4) 0 var(--s4) var(--s5);
+  border-left: 2px solid var(--acc);
+  font-size: 1rem; color: var(--tinta);
+  max-width: 44ch; text-wrap: pretty;
+}
+.tesis strong { font-weight: 600; }
+
+.top-foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4); }
+
+.chip {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  padding: 5px var(--s3) 5px var(--s2);
+  border: 1px solid var(--linea); border-radius: var(--r-sm);
+  background: var(--papel-2);
+  font-family: var(--mono); font-size: .75rem; color: var(--suave);
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--verde); }
+
+.cta {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  padding: var(--s3) var(--s5);
+  border: 1.5px solid var(--tinta); border-radius: var(--r-sm);
+  background: var(--tinta); color: var(--papel);
+  font-weight: 600; font-size: .9375rem;
+}
+.cta span[aria-hidden] { color: var(--acc); }
+
+/* ── La línea (carril + hitos) ───────────────────────────────── */
+
+.linea-wrap { position: relative; }
+
+.rail {                       /* el carril: gris de fondo */
+  position: absolute; left: 7px; top: 6px; bottom: 6px; width: 1px;
+  background: var(--linea);
+}
+.rail-fill {                  /* el carril que se rellena al bajar */
+  position: absolute; left: 7px; top: 6px; width: 1px; height: 0;
+  background: var(--acc);
+}
+
+.linea { list-style: none; margin: 0; padding: 0 0 0 var(--s7); }
+
+.hito { position: relative; padding-bottom: var(--s8); }
+.hito:last-child { padding-bottom: 0; }
+
+.hito::before {               /* el punto del hito */
+  content: "";
+  position: absolute; left: calc(var(--s7) * -1 + 1px); top: .45em;
+  width: 13px; height: 13px; border-radius: 50%;
+  border: 1px solid var(--linea);
+  background: var(--papel);
+  transition: border-color .3s var(--ease), background-color .3s var(--ease);
+}
+.hito.live::before { border-color: var(--acc); background: var(--acc); }
+
+.hito-et {
+  display: block; margin-bottom: var(--s3);
+  font-family: var(--mono); font-size: .6875rem; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--suave);
+}
+.hito.live .hito-et { color: var(--acc); }
+
+.hito h2 {
+  margin: 0 0 var(--s3);
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.125rem);
+  line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance;
+}
+.hito p { margin: 0 0 var(--s3); color: var(--suave); text-wrap: pretty; max-width: 52ch; }
+
+.ap {                         /* qué se llevó de ese capítulo */
+  margin: var(--s4) 0 0;
+  font-family: var(--mono); font-size: .8125rem; line-height: 1.6;
+  color: var(--tinta); max-width: 52ch;
+}
+.ap b { font-weight: 500; color: var(--suave); }
+
+.hito-enlaces { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s4); }
+.hito-enlaces a {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  padding: 5px var(--s3);
+  border: 1px solid var(--linea); border-radius: var(--r-sm);
+  font-family: var(--mono); font-size: .75rem; color: var(--tinta);
+}
+
+/* El hueco abierto: el capítulo que aún no tiene contenido */
+.hito--abierto h2 { color: var(--acc); }
+.hito--abierto p { color: var(--suave); }
+
+/* ── Cierre: recursos, redes y contacto ──────────────────────── */
+
+.cierre {
+  margin-top: var(--s8);
+  padding-top: var(--s6);
+  border-top: 1.5px solid var(--tinta);
+  display: grid; gap: var(--s6);
+}
+
+.blk-h {
+  display: block; margin-bottom: var(--s4);
+  font-family: var(--mono); font-size: .6875rem; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--suave);
+}
+
+.rec { display: block; padding: var(--s5); border: 1px solid var(--linea); border-radius: var(--r-md); }
+.rec h3 {
+  margin: 0 0 var(--s3);
+  font-family: var(--display); font-weight: 700;
+  font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1.15;
+}
+.rec p { margin: 0 0 var(--s4); color: var(--suave); font-size: .9375rem; text-wrap: pretty; }
+.rec .meta { font-family: var(--mono); font-size: .6875rem; letter-spacing: .1em; text-transform: uppercase; color: var(--acc); }
+
+.social { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.social a {
+  padding: var(--s2) var(--s4);
+  border: 1px solid var(--linea); border-radius: var(--r-sm);
+  font-size: .9375rem; font-weight: 500;
+}
+
+.contacto p { margin: 0 0 var(--s4); color: var(--suave); max-width: 46ch; text-wrap: pretty; }
+.acts { display: flex; flex-wrap: wrap; gap: var(--s3); }
+.btn {
+  display: inline-block; padding: var(--s3) var(--s5);
+  border: 1px solid var(--tinta); border-radius: var(--r-sm);
+  font-weight: 600; font-size: .9375rem;
+}
+.btn--solid { background: var(--tinta); color: var(--papel); }
+.tel { margin: var(--s4) 0 0; font-family: var(--mono); font-size: .75rem; color: var(--suave); }
+
+/* ── Pie ─────────────────────────────────────────────────────── */
+
+.foot {
+  max-width: 760px; margin: 0 auto;
+  padding: var(--s5) var(--s5) var(--s8);
+  border-top: 1px solid var(--linea);
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s2);
+}
+.foot p { margin: 0; font-family: var(--mono); font-size: .75rem; }
+.foot .foot-meta { color: var(--suave); }
+
+/* ── Hover (solo puntero real) ───────────────────────────────── */
+
+@media (hover: hover) {
+  .hito-enlaces a, .social a { transition: border-color .18s var(--ease), color .18s var(--ease); }
+  .hito-enlaces a:hover, .social a:hover { border-color: var(--acc); color: var(--acc); }
+  .rec { transition: border-color .18s var(--ease); }
+  .rec:hover { border-color: var(--acc); }
+  .btn { transition: background-color .18s var(--ease), border-color .18s var(--ease); }
+  .btn--solid:hover { background: var(--acc); border-color: var(--acc); }
+  .cta { transition: background-color .18s var(--ease), border-color .18s var(--ease); }
+  .cta:hover { background: var(--acc); border-color: var(--acc); }
+  .cta:hover span[aria-hidden] { color: var(--papel); }
+  .name em { transition: color .3s var(--ease); }
+}
+
+/* ── Entrada escalonada: cabecera e hitos, uno a uno ─────────── */
+
+.js-reveal .rise { opacity: 0; transform: translateY(16px); }
+.js-reveal .rise.in {
+  opacity: 1; transform: none;
+  transition: opacity .55s var(--ease), transform .55s var(--ease);
+  transition-delay: calc(var(--d, 0) * 70ms);
+}
+
+@media (min-width: 700px) {
+  .sheet { padding-inline: var(--s7); }
+  .linea-wrap { padding-right: var(--s5); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal .rise, .js-reveal .rise.in { opacity: 1; transform: none; }
+  .rail-fill { height: 100%; }
+  * { transition: none !important; animation: none !important; }
+}

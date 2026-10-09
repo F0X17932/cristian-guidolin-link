@@ -1,10 +1,7 @@
 {
-  "cleanUrls": true,
-  "rewrites": [
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "link.cristianguidolin.com" }],
-      "destination": "/link/index.html"
-    }
+  "routes": [
+    { "src": "/", "has": [{ "type": "host", "value": "link.cristianguidolin.com" }], "dest": "/link/index.html" },
+    { "src": "/privacidad/?", "dest": "/privacidad/index.html" },
+    { "handle": "filesystem" }
   ]
 }

@@ -331,3 +331,21 @@ body { animation: gridDrift 90s linear infinite; }
   .logos-row { animation: none; flex-wrap: wrap; width: auto; }
   .logos-row [aria-hidden="true"] { display: none; }
 }
+
+/* Recurso con miniatura de portada */
+.rec--thumb { grid-template-columns: 96px 1fr auto; align-items: center; gap: 2px var(--s4); }
+.rec--thumb .rec-img { grid-row: 1 / span 2; width: 96px; height: 120px; object-fit: cover;
+  border: 1px solid var(--linea); border-radius: var(--r-sm); display: block; background: var(--fondo-2); }
+.rec--thumb .rec-t { grid-column: 2; align-self: end; }
+.rec--thumb .rec-d { grid-column: 2; align-self: start; }
+.rec--thumb .rec-s { grid-column: 3; }
+@media (hover: hover) {
+  .rec--thumb .rec-img { transition: transform .3s var(--ease), border-color .3s var(--ease); }
+  .rec--thumb:hover .rec-img { transform: rotate(-2deg) scale(1.03); border-color: var(--acc); }
+}
+@media (max-width: 560px) {
+  .rec--thumb { grid-template-columns: 80px 1fr; }
+  .rec--thumb .rec-img { width: 80px; height: 100px; }
+  .rec--thumb .rec-s { grid-column: 2; grid-row: auto; justify-self: start; margin-top: var(--s1); }
+  .rec--thumb .rec-img { grid-row: 1 / span 3; }
+}

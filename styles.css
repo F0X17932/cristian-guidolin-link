@@ -356,3 +356,35 @@ body { animation: gridDrift 90s linear infinite; }
 /* Icono WhatsApp en los botones de contacto */
 .wa { width: 18px; height: 18px; flex: 0 0 auto; }
 .btn--solid { display: inline-flex; align-items: center; gap: var(--s2); }
+
+/* ── Pie: enlaces legales ── */
+.foot a { color: inherit; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: var(--linea); }
+.foot a:hover { color: var(--acc); }
+
+/* ── Aviso de cookies: barra pequeña abajo, no tapa la página ── */
+.cookies {
+  position: fixed; left: 50%; bottom: 16px; z-index: 50;
+  width: min(560px, calc(100% - 24px));
+  transform: translate(-50%, 16px); opacity: 0;
+  transition: transform .3s var(--ease), opacity .3s var(--ease);
+  display: flex; align-items: center; gap: var(--s4);
+  padding: var(--s3) var(--s3) var(--s3) var(--s4);
+  background: #fff; border: 1px solid var(--linea); border-radius: var(--r-md);
+  font: 400 .8125rem/1.45 var(--sans); color: var(--tinta);
+}
+.cookies.dentro { transform: translate(-50%, 0); opacity: 1; }
+.cookies.fuera { transform: translate(-50%, 16px); opacity: 0; }
+.cookies p { margin: 0; flex: 1; }
+.cookies a { color: var(--suave); text-underline-offset: 2px; }
+.cookies-b { display: flex; gap: var(--s2); flex: 0 0 auto; }
+.cookies button {
+  font: 600 .8125rem/1 var(--sans); cursor: pointer; min-height: 40px; padding: 0 var(--s4);
+  border-radius: var(--r-sm); border: 1px solid var(--linea); background: transparent; color: var(--tinta);
+}
+.cookies button.si { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+.cookies button:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+@media (max-width: 560px) {
+  .cookies { flex-direction: column; align-items: stretch; gap: var(--s3); bottom: 12px; }
+  .cookies-b button { flex: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .cookies { transition: none; } }
